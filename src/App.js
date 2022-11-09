@@ -1,8 +1,11 @@
 import React from 'react';
+import { Header } from './components';
 
 const App = () => {
   return (
-    <div className='text-2xl'>App</div>
+    <div className='w-screen h-auto flex flex-col'>
+      <Header></Header>
+    </div>
   )
 }
 
