@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../img/logo.png'
 import Avatar from '../img/avatar.png'
-import { MdShoppingBasket } from 'react-icons/md'
+import { MdShoppingBasket, MdAdd, MdLogout } from 'react-icons/md'
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -19,12 +19,14 @@ const Header = () => {
 
 
   const login = async() => {
-    const {user : {refreshToken, providerData}} = await signInWithPopup(firebaseAuth, provider);
-    dispatch({
-      type : actionType.SET_USER,
-      user : providerData[0],
-    });
-    localStorage.setItem('user', JSON.stringify(providerData[0])); 
+    if (!user) {
+      const { user: { refreshToken, providerData } } = await signInWithPopup(firebaseAuth, provider);
+      dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0],
+      });
+      localStorage.setItem('user', JSON.stringify(providerData[0]));
+    }
   }
 
   return (
@@ -53,6 +55,10 @@ const Header = () => {
 
             <div className='relative'>
               <motion.img whileTap={{ scale: 0.6 }} src={user ? user.photoURL : Avatar} alt="userprofile" className='w-10 min-w-[40px] h-10 min-h-[40px] shadow-2xl drop-shadow-xl cursor-pointer rounded-full' onClick={login} />
+              <div className='flex flex-col w-40 bg-gray-50 shadow-xl rounded-lg absolute top-12 right-0'>
+                <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base">New Item <MdAdd /></p>
+                <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base">Logout <MdLogout /></p>
+              </div>
             </div>
           </div>
         </div>
