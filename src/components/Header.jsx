@@ -91,10 +91,19 @@ const Header = () => {
 
         {/* Mobile */}
         <div className='flex items-center justify-between md:hidden w-full h-full'>
+          
+          <div className='relative flex items-center justify-center'>
+            <MdShoppingBasket className='text-textColor text-text-2xl cursor-pointer' />
+            <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg'>
+              <p className='text-xs text-white font-semibold flex items-center justify-center'>2</p>
+            </div>
+          </div>
+          
           <Link to={'/'} className='flex items-center gap-2'>
             <img className='w-8 object-cover' src={Logo} alt="logo" />
             <p className='text-headingColor text-xl font-bold'>City</p>
           </Link>
+
           <div className='relative'>
             <motion.img whileTap={{ scale: 0.6 }} src={user ? user.photoURL : Avatar} alt="userprofile" className='w-10 min-w-[40px] h-10 min-h-[40px] shadow-2xl drop-shadow-xl cursor-pointer rounded-full' onClick={login} />
             {
@@ -107,7 +116,6 @@ const Header = () => {
                       </Link>
                     )
                   }
-
                   <ul className='flex flex-col'>
                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2'>Home</li>
                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2'>Menu</li>
