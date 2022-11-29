@@ -1,11 +1,8 @@
 import React from 'react';
 import Delivery from '../img/delivery.png';
 import HeroBg from '../img/heroBg.png';
-import I1 from '../img/i1.png';
+import { heroData } from '../utils/data';
 
-const heropData = [
-    {id : 1, name : 'IceCream', decp : 'Chocolate & Vanilla', price : '5.25', imgSrc : ''}
-];
 
 const HomeContainer = () => {
   return (
@@ -27,13 +24,17 @@ const HomeContainer = () => {
           <div className='py-2 flex-1 flex items-center relative'>
             <img className='h-420 w-full lg:w-auto lg:h-650 ml-auto' src={HeroBg} alt="hero-bg" />
 
-            <div className='w-full h-full absolute flex items-center justify-center top-0 left-0 px-32 py-4'>
-                <div className='w-190 bg-cardOverlay backdrop-blur-md rounded-3xl p-4 flex flex-col items-center justify-center'>
-                    <img className='w-40 -mt-20' src={I1} alt="ice-cream" />
-                    <p className='text-xl font-semibold text-textColor mt-4'>Ice cream</p>
-                    <p className='text-sm text-lighttextGray font-semibold my-2'>Chocolate & Vanilla</p>
-                    <p className='text-sm font-semibold text-headingColor'><span className='text-xs text-red-600'>$</span> 5.25</p>
-                </div>
+            <div className='w-full h-full absolute flex items-center justify-center top-0 left-0 lg:px-24 py-4 gap-4 flex-wrap drop-shadow-lg'>
+                {
+                    heroData && heroData.map(n => (
+                        <div key={n.id} className=' lg:w-190 bg-cardOverlay backdrop-blur-md rounded-3xl p-4 flex flex-col items-center justify-center'>
+                            <img className='w-20 lg:w-40 -mt-10 lg:-mt-20' src={n.imgSrc} alt="ice-cream" />
+                            <p className='text-base lg:text-xl font-semibold text-textColor mt-2 lg:mt-4'>{n.name}</p>
+                            <p className='text-[12px] lg:text-sm text-lighttextGray font-semibold my-1 lg:my-3'>{n.decp}</p>
+                            <p className='text-sm font-semibold text-headingColor'><span className='text-xs text-red-600'>$</span> {n.price}</p>
+                        </div>
+                    ))
+                }
             </div>
           </div>
       </section>
