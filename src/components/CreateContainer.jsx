@@ -64,7 +64,22 @@ const CreateContainer = () => {
     });
   };
 
-  const saveDetails = () => {};
+  const saveDetails = () => {
+    setIsLoading(true);
+    try {
+      
+      
+    } catch (error) {
+      console.log(error);
+      setFields(true);
+      setMsg('Error while uploading : Try again');
+      setAlertStatus('danger');
+      setTimeout(() => {
+        setFields(false);
+        setIsLoading(false);
+      }, 4000);
+    }
+  };
 
   const clearData = () => {
     setTitle("");
