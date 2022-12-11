@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MdFastfood, MdCloudUpload, MdDelete, MdFoodBank, MdAttachMoney } from 'react-icons/md'
 import { storage } from '../firebase.config';
 import { categories } from '../utils/data';
+import { saveItem } from '../utils/firebaseFunctions';
 import Loader from './Loader';
 
 const CreateContainer = () => {
@@ -67,7 +68,34 @@ const CreateContainer = () => {
   const saveDetails = () => {
     setIsLoading(true);
     try {
-      
+      if ((!title || !calories || !imageAsset || !price || !category)) {
+        setFields(true);
+        setMsg("Required fields can't be empty");
+        setAlertStatus('danger');
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 4000);
+      }else{
+        const data = {
+          id : `${Date.now()}`,
+          title : title,
+          imageURL : imageAsset,
+          category : category,
+          calories : calories,
+          qty : 1,
+          price : price
+        }
+        saveItem(data);
+        setIsLoading(false);
+        setFields(true);
+        setMsg('Data Upload Successfully');
+        clearData();
+        setAlertStatus('success');
+        setTimeout(() => {
+          setFields(false);
+        }, 4000);
+      }
       
     } catch (error) {
       console.log(error);
