@@ -2,9 +2,11 @@ import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebas
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { MdFastfood, MdCloudUpload, MdDelete, MdFoodBank, MdAttachMoney } from 'react-icons/md'
+import { actionType } from '../context/reducer';
+import { useStateValue } from '../context/StateProvider';
 import { storage } from '../firebase.config';
 import { categories } from '../utils/data';
-import { saveItem } from '../utils/firebaseFunctions';
+import { getAllFoodItems, saveItem } from '../utils/firebaseFunctions';
 import Loader from './Loader';
 
 const CreateContainer = () => {
@@ -18,6 +20,7 @@ const CreateContainer = () => {
   const [alertStatus, setAlertStatus] = useState("danger"); //error message
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [{ foodItems }, dispatch] = useStateValue();
 
   const uploadImage = (e) => {
     setIsLoading(true);
@@ -107,6 +110,8 @@ const CreateContainer = () => {
         setIsLoading(false);
       }, 4000);
     }
+
+    fetchData();
   };
 
   const clearData = () => {
@@ -115,6 +120,15 @@ const CreateContainer = () => {
     setCalories("");
     setPrice("");
     setCategory("Select Category");
+  };
+
+  const fetchData = async () => {
+    await getAllFoodItems().then(data => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data
+      });
+    });
   };
 
   return (
