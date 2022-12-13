@@ -15,7 +15,7 @@ const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const [{user, cartShow}, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -72,9 +72,11 @@ const Header = () => {
             {/* Cart */}
             <div className='relative flex items-center justify-center' onClick={showCart}>
               <MdShoppingBasket className='text-textColor text-text-2xl cursor-pointer' />
-              <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg'>
-                <p className='text-xs text-white font-semibold flex items-center justify-center'>2</p>
-              </div>
+              {cartItems && cartItems.length > 0 && (
+                <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg'>
+                  <p className='text-xs text-white font-semibold flex items-center justify-center'>{cartItems.length}</p>
+                </div>
+              )}
             </div>
 
             <div className='relative'>
@@ -103,9 +105,11 @@ const Header = () => {
           {/* cart */}
           <div className='relative flex items-center justify-center' onClick={showCart}>
             <MdShoppingBasket className='text-textColor text-text-2xl cursor-pointer' />
-            <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg'>
-              <p className='text-xs text-white font-semibold flex items-center justify-center'>2</p>
-            </div>
+            {cartItems && cartItems.length > 0 && (
+              <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg'>
+                <p className='text-xs text-white font-semibold flex items-center justify-center'>{cartItems.length}</p>
+              </div>
+            )}
           </div>
           
           <Link to={'/'} className='flex items-center gap-2'>
