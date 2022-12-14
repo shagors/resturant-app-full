@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
-import { BiMinus, BiPlus} from "react-icons/bi";
 import { useStateValue } from '../context/StateProvider';
 import { actionType } from '../context/reducer';
 import EmptyCart from '../img/emptyCart.svg'
@@ -20,6 +19,22 @@ const CartContainer = () => {
         });
     }
 
+    useEffect(() => {
+        let totalPrice = cartItems.reduce(function (accumulator, item) {
+            return accumulator + item.qty * item.price;
+        }, 0);
+        setTot(totalPrice);
+    }, [tot, flag]);
+
+    const clearCart = () => {
+        dispatch({
+            type: actionType.SET_CART_ITEMS,
+            cartItems: [],
+        });
+
+        localStorage.setItem("cartItems", JSON.stringify([]));
+    };
+
   return (
       <motion.div 
       initial={{ opacity: 0, x: 200 }} 
@@ -31,7 +46,7 @@ const CartContainer = () => {
                 <MdOutlineKeyboardBackspace className='text-textColor text-3xl' />
             </motion.div>
             <p className='text-textColor text-lg font-semibold'>Cart</p>
-              <motion.p whileTap={{ scale : 0.75 }} className='flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md  cursor-pointer text-textColor text-base'>Clear <RiRefreshFill /></motion.p>
+            <motion.p whileTap={{ scale : 0.75 }} className='flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md  cursor-pointer text-textColor text-base' onClick={clearCart}>Clear <RiRefreshFill /></motion.p>
         </div>
 
         {/* bottom part for cart */}
