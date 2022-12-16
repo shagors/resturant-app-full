@@ -13,3 +13,7 @@
     * Framer-motion
     * React-icons
     * tailwind-scrollbar
+
+![preview img](/Capture1.PNG)
+![preview img](/Capture2.PNG)
+![preview img](/Capture3.PNG)
